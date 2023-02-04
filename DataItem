@@ -1,0 +1,95 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package com.example.toukei;
+
+import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class DataItem extends Fragment {
+    TextView area;
+    Bundle bundle;
+    ArrayList<String> cat = new ArrayList();
+    LinearLayout cat_data;
+    Bundle classobj;
+    LinearLayout listGetDataScroll;
+    TextView tab;
+    TextView time;
+    String unit;
+    TextView value;
+    LinearLayout view;
+
+    public DataItem() {
+    }
+
+    public View onCreateView(LayoutInflater var1, ViewGroup var2, Bundle var3) {
+        if (this.view == null) {
+            this.bundle = this.getArguments();
+            this.classobj = this.bundle.getBundle("classdata");
+            var1 = LayoutInflater.from(this.getActivity());
+            this.view = (LinearLayout)var1.inflate(2130903046, (ViewGroup)null);
+            this.tab = (TextView)this.view.findViewById(2131296270);
+            this.time = (TextView)this.view.findViewById(2131296271);
+            this.area = (TextView)this.view.findViewById(2131296272);
+            this.value = (TextView)this.view.findViewById(2131296273);
+            this.cat_data = (LinearLayout)this.view.findViewById(2131296265);
+            this.listGetDataScroll = (LinearLayout)this.view.findViewById(2131296274);
+            LinearLayout var7 = (LinearLayout)this.view.findViewById(2131296274);
+            Iterator var10 = this.bundle.keySet().iterator();
+
+            while(true) {
+                int var4;
+                while(var10.hasNext()) {
+                    String var8 = (String)var10.next();
+                    System.out.println(this.bundle.size());
+                    if (var8.indexOf("tab") != -1) {
+                        this.tab.setText("表章事項：" + this.classobj.getString(var8 + ":" + this.bundle.getString(var8)));
+                        this.tab.setVisibility(0);
+                    } else if (var8.indexOf("time") != -1) {
+                        this.time.setText("時間軸事項：" + this.classobj.getString(var8 + ":" + this.bundle.getString(var8)));
+                    } else if (var8.indexOf("area") != -1) {
+                        this.area.setText("地域事項：" + this.classobj.getString(var8 + ":" + this.bundle.getString(var8)));
+                    } else if (var8.indexOf("VALUE") != -1) {
+                        this.value.setText("VALUE：" + this.bundle.getString(var8));
+                    } else if (var8.indexOf("unit") != -1) {
+                        this.unit = this.bundle.getString(var8);
+                    } else if (var8.indexOf("cat") != -1 && var8.length() == 5) {
+                        var4 = Integer.parseInt(var8.replace("cat", ""));
+                        this.cat.add(var4 - 1, "分類事項" + var4 + "：" + this.classobj.getString(var8 + ":" + this.bundle.getString(var8)));
+                    } else {
+                        TextView var5 = new TextView(this.getActivity());
+                        if (var8.indexOf("No") != -1) {
+                            var5.setText(var8 + ":" + this.bundle.getString(var8));
+                            this.listGetDataScroll.addView(var5);
+                        }
+                    }
+                }
+
+                this.value.append(this.unit);
+
+                for(var4 = 0; var4 < this.cat.size(); ++var4) {
+                    TextView var9 = (TextView)var1.inflate(2130903042, (ViewGroup)null);
+                    var9.setText((CharSequence)this.cat.get(var4));
+                    this.cat_data.addView(var9);
+                }
+                break;
+            }
+        } else {
+            ViewGroup var6 = (ViewGroup)this.view.getParent();
+            if (var6 != null) {
+                var6.removeView(this.view);
+            }
+        }
+
+        return this.view;
+    }
+}
