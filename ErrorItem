@@ -1,0 +1,37 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package com.example.toukei;
+
+import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+public class ErrorItem extends Fragment {
+    View view;
+
+    public ErrorItem() {
+    }
+
+    public View onCreateView(LayoutInflater var1, ViewGroup var2, Bundle var3) {
+        if (this.view == null) {
+            Bundle var6 = this.getArguments();
+            this.view = LayoutInflater.from(this.getActivity()).inflate(2130903047, (ViewGroup)null);
+            TextView var4 = (TextView)this.view.findViewById(2131296275);
+            var4.setText(var6.getString("ERROR_MSG"));
+            var4.append("\n\n" + var6.getString("ERROR_URL").replaceAll("&", "\n&"));
+        } else {
+            ViewGroup var5 = (ViewGroup)this.view.getParent();
+            if (var5 != null) {
+                var5.removeView(this.view);
+            }
+        }
+
+        return this.view;
+    }
+}
