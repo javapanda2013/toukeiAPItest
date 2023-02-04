@@ -1,0 +1,246 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package com.example.toukei;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.text.InputFilter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+public class ListSetting extends Activity {
+    Button backto;
+    EditText codeset;
+    Spinner codetype;
+    EditText fieldset;
+    Spinner fieldtype;
+    InputFilter[] filter;
+    Spinner opentime;
+    EditText opentimeset;
+    Spinner searchKind;
+    EditText searchword;
+    Spinner statsNameList;
+    Spinner time;
+    EditText timeset;
+
+    public ListSetting() {
+    }
+
+    private void loadData() {
+        SharedPreferences var1 = this.getSharedPreferences("ToukeiListParam", 0);
+        this.time.setSelection(var1.getInt("time", 0));
+        this.timeset.setText(var1.getString("timeset", ""));
+        this.opentime.setSelection(var1.getInt("opentime", 0));
+        this.opentimeset.setText(var1.getString("opentimeset", ""));
+        this.fieldtype.setSelection(var1.getInt("fieldtype", 0));
+        this.fieldset.setText(var1.getString("fieldset", ""));
+        this.codetype.setSelection(var1.getInt("codetype", 0));
+        this.codeset.setText(var1.getString("codeset", ""));
+        this.searchword.setText(var1.getString("searchword", ""));
+        this.searchKind.setSelection(var1.getInt("searchKind", 0));
+        this.statsNameList.setSelection(var1.getInt("statsNameList", 0));
+    }
+
+    private void setListener(View var1) {
+        Spinner var2;
+        switch (var1.getId()) {
+            case 2131296264:
+                var1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View var1) {
+                        Intent var2 = new Intent();
+                        var2.setClassName("com.example.toukei", "com.example.toukei.MainActivity");
+                        ListSetting.this.startActivity(var2);
+                    }
+                });
+                break;
+            case 2131296328:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                ListSetting.this.filter = new InputFilter[1];
+                                ListSetting.this.filter[0] = new InputFilter.LengthFilter(4);
+                                ListSetting.this.timeset.setFilters(ListSetting.this.filter);
+                                ListSetting.this.timeset.setWidth(130);
+                                ListSetting.this.timeset.setHint(2131034134);
+                                break;
+                            case 1:
+                                ListSetting.this.filter = new InputFilter[1];
+                                ListSetting.this.filter[0] = new InputFilter.LengthFilter(6);
+                                ListSetting.this.timeset.setFilters(ListSetting.this.filter);
+                                ListSetting.this.timeset.setWidth(180);
+                                ListSetting.this.timeset.setHint(2131034135);
+                                break;
+                            case 2:
+                                ListSetting.this.filter = new InputFilter[1];
+                                ListSetting.this.filter[0] = new InputFilter.LengthFilter(13);
+                                ListSetting.this.timeset.setFilters(ListSetting.this.filter);
+                                ListSetting.this.timeset.setWidth(350);
+                                ListSetting.this.timeset.setHint(2131034136);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296330:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                ListSetting.this.filter = new InputFilter[1];
+                                ListSetting.this.filter[0] = new InputFilter.LengthFilter(4);
+                                ListSetting.this.opentimeset.setFilters(ListSetting.this.filter);
+                                ListSetting.this.opentimeset.setWidth(130);
+                                ListSetting.this.opentimeset.setHint(2131034134);
+                                break;
+                            case 1:
+                                ListSetting.this.filter = new InputFilter[1];
+                                ListSetting.this.filter[0] = new InputFilter.LengthFilter(6);
+                                ListSetting.this.opentimeset.setFilters(ListSetting.this.filter);
+                                ListSetting.this.opentimeset.setWidth(180);
+                                ListSetting.this.opentimeset.setHint(2131034135);
+                                break;
+                            case 2:
+                                ListSetting.this.filter = new InputFilter[1];
+                                ListSetting.this.filter[0] = new InputFilter.LengthFilter(13);
+                                ListSetting.this.opentimeset.setFilters(ListSetting.this.filter);
+                                ListSetting.this.opentimeset.setWidth(350);
+                                ListSetting.this.opentimeset.setHint(2131034136);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296332:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                ListSetting.this.filter = new InputFilter[1];
+                                ListSetting.this.filter[0] = new InputFilter.LengthFilter(2);
+                                ListSetting.this.fieldset.setFilters(ListSetting.this.filter);
+                                ListSetting.this.fieldset.setWidth(90);
+                                ListSetting.this.fieldset.setHint("xx");
+                                break;
+                            case 1:
+                                ListSetting.this.filter = new InputFilter[1];
+                                ListSetting.this.filter[0] = new InputFilter.LengthFilter(4);
+                                ListSetting.this.fieldset.setFilters(ListSetting.this.filter);
+                                ListSetting.this.fieldset.setWidth(130);
+                                ListSetting.this.fieldset.setHint("xxxx");
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296334:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                ListSetting.this.filter = new InputFilter[1];
+                                ListSetting.this.filter[0] = new InputFilter.LengthFilter(8);
+                                ListSetting.this.codeset.setFilters(ListSetting.this.filter);
+                                ListSetting.this.codeset.setWidth(180);
+                                ListSetting.this.codeset.setHint("xxxxx");
+                                break;
+                            case 1:
+                                ListSetting.this.filter = new InputFilter[1];
+                                ListSetting.this.filter[0] = new InputFilter.LengthFilter(8);
+                                ListSetting.this.codeset.setFilters(ListSetting.this.filter);
+                                ListSetting.this.codeset.setWidth(250);
+                                ListSetting.this.codeset.setHint("xxxxxxxx");
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296337:
+                var2 = (Spinner)var1;
+                var1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View var1) {
+                    }
+                });
+                break;
+            case 2131296338:
+                var2 = (Spinner)var1;
+                var1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View var1) {
+                    }
+                });
+        }
+
+    }
+
+    public void finish() {
+        this.saveData();
+        super.finish();
+    }
+
+    protected void onCreate(Bundle var1) {
+        super.onCreate(var1);
+        View var2 = LayoutInflater.from(this).inflate(2130903060, (ViewGroup)null);
+        this.time = (Spinner)var2.findViewById(2131296328);
+        this.timeset = (EditText)var2.findViewById(2131296329);
+        this.setListener(this.time);
+        this.opentime = (Spinner)var2.findViewById(2131296330);
+        this.opentimeset = (EditText)var2.findViewById(2131296331);
+        this.setListener(this.opentime);
+        this.fieldtype = (Spinner)var2.findViewById(2131296332);
+        this.fieldset = (EditText)var2.findViewById(2131296333);
+        this.setListener(this.fieldtype);
+        this.codetype = (Spinner)var2.findViewById(2131296334);
+        this.codeset = (EditText)var2.findViewById(2131296335);
+        this.setListener(this.codetype);
+        this.searchword = (EditText)var2.findViewById(2131296336);
+        this.searchKind = (Spinner)var2.findViewById(2131296337);
+        this.statsNameList = (Spinner)var2.findViewById(2131296338);
+        this.backto = (Button)var2.findViewById(2131296264);
+        this.setListener(this.backto);
+        this.setContentView(var2);
+        this.loadData();
+    }
+
+    protected void onPause() {
+        this.saveData();
+        super.onPause();
+    }
+
+    public void saveData() {
+        SharedPreferences.Editor var1 = this.getSharedPreferences("ToukeiListParam", 0).edit();
+        var1.putInt("time", this.time.getSelectedItemPosition());
+        var1.putString("timeset", this.timeset.getText().toString());
+        var1.putInt("opentimet", this.opentime.getSelectedItemPosition());
+        var1.putString("opentimeset", this.opentimeset.getText().toString());
+        var1.putInt("fieldtype", this.fieldtype.getSelectedItemPosition());
+        var1.putString("fieldset", this.fieldset.getText().toString());
+        var1.putInt("codetype", this.codetype.getSelectedItemPosition());
+        var1.putString("codeset", this.codeset.getText().toString());
+        var1.putString("searchword", this.searchword.getText().toString());
+        var1.putInt("searchKind", this.searchKind.getSelectedItemPosition());
+        var1.putInt("statsNameList", this.statsNameList.getSelectedItemPosition());
+        var1.commit();
+    }
+}
