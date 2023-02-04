@@ -1,0 +1,391 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package com.example.toukei;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
+import android.widget.SimpleExpandableListAdapter;
+import android.widget.Spinner;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
+public class ExlistTest extends Activity {
+    LinearLayout areacd;
+    EditText areacd1;
+    LinearLayout areacd2;
+    Spinner areacdsearchspinner;
+    EditText areacdtabfrom;
+    EditText areacdtabto;
+    LinearLayout arealv;
+    EditText arealvsearch;
+    Spinner arealvsearchspinner;
+    Button backto;
+    LinearLayout cd;
+    EditText cd1;
+    LinearLayout cd2;
+    Spinner cdsearchspinner;
+    EditText cdtabfrom;
+    EditText cdtabto;
+    Spinner cntGetFlg;
+    Spinner dataSetspinner;
+    LayoutInflater factory;
+    String id;
+    SharedPreferences.Editor infIdEditor;
+    SharedPreferences infid;
+    EditText lvsearch;
+    Spinner lvsearchspinner;
+    Spinner metaGetFlg;
+    View param;
+    EditText setcallback;
+    EditText setlimit;
+    EditText setstartPositon;
+    LinearLayout statdata_param;
+    EditText statsDataId;
+    LinearLayout timecd;
+    EditText timecd1;
+    LinearLayout timecd2;
+    Spinner timecdsearchspinner;
+    EditText timecdtabfrom;
+    EditText timecdtabto;
+    LinearLayout timelv;
+    EditText timelvsearch;
+    Spinner timelvsearchspinner;
+
+    public ExlistTest() {
+    }
+
+    private void loadData() {
+        SharedPreferences var1 = this.getSharedPreferences("ToukeiDataGetParam", 0);
+        this.dataSetspinner.setSelection(var1.getInt("dataSetspinner", 0));
+        this.statsDataId.setText(var1.getString("statsDataId", ""));
+        this.setContentView(this.loadMeta());
+    }
+
+    private View loadMeta() {
+        LinearLayout var1 = (LinearLayout)this.factory.inflate(2130903064, (ViewGroup)null);
+        this.id = this.statsDataId.getText().toString();
+        this.infid = this.getSharedPreferences("ToukeiINF_id" + this.id, 0);
+        this.infIdEditor = this.infid.edit();
+        HashSet var2 = (HashSet)this.infid.getStringSet("keyset", (Set)null);
+        Object var3 = new ExpandableListView(this);
+        if (var2 != null) {
+            int var4 = this.infid.getInt("catCount", 0);
+            ArrayList var12 = new ArrayList();
+
+            int var5;
+            for(var5 = 0; var5 < var4; ++var5) {
+                var12.add((Object)null);
+            }
+
+            ArrayList var6 = new ArrayList();
+            var12 = new ArrayList();
+
+            for(var5 = 0; var5 < var2.size(); ++var5) {
+                var6.add((Object)null);
+                var12.add((Object)null);
+            }
+
+            var5 = 0;
+            System.out.println(this.infid.getInt("catCount", 0));
+            System.out.println("keysetsize():" + var2.size());
+            int var7;
+            String var8;
+            ArrayList var14;
+            HashMap var16;
+            if (var2.contains("tab")) {
+                var7 = this.infid.getInt("tab:count", 0);
+                HashMap var13 = new HashMap();
+                var8 = this.infid.getString("tab", "");
+                var13.put("group", "tab:" + var8);
+                var6.set(0, var13);
+                var14 = new ArrayList();
+
+                for(var5 = 0; var5 < var7; ++var5) {
+                    var16 = new HashMap();
+                    var16.put("group", "tab");
+                    var16.put("name", "code:" + this.infid.getString("tab:" + var5 + "code", "a") + " name:" + this.infid.getString("tab:" + var5 + "name", "a") + " level:" + this.infid.getString("tab:" + var5 + "level", "a"));
+                    var14.add(var16);
+                }
+
+                var12.set(0, var14);
+                var5 = 0 + 1;
+            }
+
+            int var9 = this.infid.getInt("area:count", 0);
+            var16 = new HashMap();
+            String var15 = this.infid.getString("area", "");
+            var16.put("group", "area:" + var15);
+            var6.set(var5, var16);
+            var14 = new ArrayList();
+
+            for(var7 = 0; var7 < var9; ++var7) {
+                var16 = new HashMap();
+                var16.put("group", "area");
+                var16.put("name", "code:" + this.infid.getString("area:" + var7 + "code", "a") + " name:" + this.infid.getString("area:" + var7 + "name", "a") + " level:" + this.infid.getString("area:" + var7 + "level", "a"));
+                var14.add(var16);
+            }
+
+            var12.set(var5, var14);
+            var9 = var5 + 1;
+            var7 = this.infid.getInt("time:count", 0);
+            var16 = new HashMap();
+            var15 = this.infid.getString("area", "");
+            var16.put("group", "time:" + var15);
+            var6.set(var9, var16);
+            var14 = new ArrayList();
+
+            for(var5 = 0; var5 < var7; ++var5) {
+                var16 = new HashMap();
+                var16.put("group", "time");
+                var16.put("name", "code:" + this.infid.getString("time:" + var5 + "code", "a") + " name:" + this.infid.getString("time:" + var5 + "name", "a") + " level:" + this.infid.getString("time:" + var5 + "level", "a"));
+                var14.add(var16);
+            }
+
+            var12.set(var9, var14);
+            var7 = var9 + 1;
+
+            for(var5 = 0; var5 < var4; ++var5) {
+                var15 = "cat" + var5;
+                int var10 = this.infid.getInt(var15 + ":count", 0);
+                HashMap var11 = new HashMap();
+                var8 = this.infid.getString(var15, "");
+                var11.put("group", var15 + ":" + var8);
+                var6.set(var7, var11);
+                ArrayList var17 = new ArrayList();
+
+                for(var9 = 0; var9 < var10; ++var9) {
+                    var16 = new HashMap();
+                    var16.put("group", var15);
+                    var16.put("name", "code:" + this.infid.getString(var15 + ":" + var9 + "code", "a") + " name:" + this.infid.getString(var15 + ":" + var9 + "name", "a") + " level:" + this.infid.getString(var15 + ":" + var9 + "level", "a"));
+                    var17.add(var16);
+                }
+
+                var12.set(var7, var17);
+                ++var7;
+            }
+
+            ((ExpandableListView)var3).setAdapter(new SimpleExpandableListAdapter(this.getApplicationContext(), var6, 17367046, new String[]{"group"}, new int[]{16908308}, var12, 2130903048, new String[]{"name", "group"}, new int[]{16908308, 16908309}));
+        } else {
+            var3 = var1;
+        }
+
+        return (View)var3;
+    }
+
+    private void setListener(View var1) {
+        switch (var1.getId()) {
+            case 2131296264:
+                var1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View var1) {
+                        Intent var2 = new Intent();
+                        var2.setClassName("com.example.toukei", "com.example.toukei.MainActivity");
+                        ExlistTest.this.startActivity(var2);
+                    }
+                });
+                break;
+            case 2131296277:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                ExlistTest.this.statdata_param.addView(ExlistTest.this.param);
+                                ExlistTest.this.statdata_param.addView(ExlistTest.this.loadMeta());
+                                break;
+                            case 1:
+                                ExlistTest.this.statdata_param.removeAllViews();
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296281:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                ExlistTest.this.lvsearch.setHint(2131034155);
+                                break;
+                            case 1:
+                                ExlistTest.this.lvsearch.setHint(2131034156);
+                                break;
+                            case 2:
+                                ExlistTest.this.lvsearch.setHint(2131034157);
+                                break;
+                            case 3:
+                                ExlistTest.this.lvsearch.setHint(2131034158);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296283:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                ExlistTest.this.cd.removeAllViews();
+                                ExlistTest.this.cd.addView(ExlistTest.this.cd1);
+                                break;
+                            case 1:
+                                ExlistTest.this.cd.removeAllViews();
+                                ExlistTest.this.cd.addView(ExlistTest.this.cd2);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296286:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                ExlistTest.this.timelvsearch.setHint(2131034155);
+                                break;
+                            case 1:
+                                ExlistTest.this.timelvsearch.setHint(2131034156);
+                                break;
+                            case 2:
+                                ExlistTest.this.timelvsearch.setHint(2131034157);
+                                break;
+                            case 3:
+                                ExlistTest.this.timelvsearch.setHint(2131034158);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296288:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                ExlistTest.this.timecd.removeAllViews();
+                                ExlistTest.this.timecd.addView(ExlistTest.this.timecd1);
+                                break;
+                            case 1:
+                                ExlistTest.this.timecd.removeAllViews();
+                                ExlistTest.this.timecd.addView(ExlistTest.this.timecd2);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296291:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                ExlistTest.this.arealvsearch.setHint(2131034155);
+                                break;
+                            case 1:
+                                ExlistTest.this.arealvsearch.setHint(2131034156);
+                                break;
+                            case 2:
+                                ExlistTest.this.arealvsearch.setHint(2131034157);
+                                break;
+                            case 3:
+                                ExlistTest.this.arealvsearch.setHint(2131034158);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296293:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                ExlistTest.this.areacd.removeAllViews();
+                                ExlistTest.this.areacd.addView(ExlistTest.this.areacd1);
+                                break;
+                            case 1:
+                                ExlistTest.this.areacd.removeAllViews();
+                                ExlistTest.this.areacd.addView(ExlistTest.this.areacd2);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            default:
+                final CheckBox var2 = (CheckBox)var1;
+                final String var3 = var2.getTag().toString();
+                var2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    public void onCheckedChanged(CompoundButton var1, boolean var2x) {
+                        ExlistTest.this.infIdEditor.putBoolean(var3, var2.isChecked());
+                        ExlistTest.this.infIdEditor.commit();
+                    }
+                });
+                var2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    public void onFocusChange(View var1, boolean var2x) {
+                        var2.setChecked(ExlistTest.this.infid.getBoolean(var3, false));
+                    }
+                });
+                var2.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                    public void onCreateContextMenu(ContextMenu var1, View var2x, ContextMenu.ContextMenuInfo var3x) {
+                        var2.setChecked(ExlistTest.this.infid.getBoolean(var3, false));
+                    }
+                });
+                var2.setChecked(this.infid.getBoolean(var3, false));
+        }
+
+    }
+
+    public void finish() {
+        super.finish();
+    }
+
+    protected void onCreate(Bundle var1) {
+        super.onCreate(var1);
+        this.factory = LayoutInflater.from(this);
+        View var2 = this.factory.inflate(2130903049, (ViewGroup)null);
+        this.param = this.factory.inflate(2130903050, (ViewGroup)null);
+        this.dataSetspinner = (Spinner)var2.findViewById(2131296277);
+        this.statsDataId = (EditText)var2.findViewById(2131296278);
+        this.statdata_param = (LinearLayout)var2.findViewById(2131296279);
+        this.getWindow().setSoftInputMode(3);
+        this.loadData();
+    }
+
+    protected void onPause() {
+        super.onPause();
+    }
+}
