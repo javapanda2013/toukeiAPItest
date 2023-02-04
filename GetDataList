@@ -1,0 +1,669 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package com.example.toukei;
+
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import com.uphyca.android.loopviewpager.FragmentPagerAdapter;
+import com.uphyca.android.loopviewpager.LoopViewPager;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+public class GetDataList extends Activity {
+    Activity ac;
+    MyFragmentStatePagerAdapter adapter;
+    Bundle classObj;
+    Document dataDoc;
+    NodeList error;
+    String errorMsg;
+    String[] lang = new String[]{"J", "E"};
+    LoopViewPager lvp;
+    Bundle pagedata;
+    TextView pagerNo;
+    TextView pagerTitle;
+    String url;
+
+    public GetDataList() {
+    }
+
+    public static HttpURLConnection connect(URL var0) {
+        HttpURLConnection var1 = null;
+
+        IOException var10000;
+        HttpURLConnection var7;
+        label50: {
+            boolean var10001;
+            try {
+                var7 = (HttpURLConnection)var0.openConnection();
+            } catch (IOException var6) {
+                var10000 = var6;
+                var10001 = false;
+                break label50;
+            }
+
+            var1 = var7;
+
+            try {
+                var7.setRequestMethod("GET");
+            } catch (IOException var5) {
+                var10000 = var5;
+                var10001 = false;
+                break label50;
+            }
+
+            var1 = var7;
+
+            try {
+                var7.setInstanceFollowRedirects(false);
+            } catch (IOException var4) {
+                var10000 = var4;
+                var10001 = false;
+                break label50;
+            }
+
+            var1 = var7;
+
+            try {
+                var7.setRequestProperty("Accept-Language", "ja;q=0.7,en;q=0.3");
+            } catch (IOException var3) {
+                var10000 = var3;
+                var10001 = false;
+                break label50;
+            }
+
+            var1 = var7;
+
+            try {
+                var7.connect();
+                return var7;
+            } catch (IOException var2) {
+                var10000 = var2;
+                var10001 = false;
+            }
+        }
+
+        IOException var8 = var10000;
+        var8.printStackTrace();
+        var7 = var1;
+        return var7;
+    }
+
+    private String createURL() {
+        SharedPreferences var1 = this.getSharedPreferences("ToukeiCommonParam", 0);
+        SharedPreferences var2 = this.getSharedPreferences("ToukeiDataGetParam", 0);
+        String var4 = "http://statdb.nstac.go.jp/api/1.0b/app/getStatsData?appId=" + var1.getString("appid", "") + "&lang=" + this.lang[var1.getInt("lang", 0)];
+        if (var2.getInt("dataSetspinner", 0) == 1) {
+            var4 = var4 + "&dataSetId=" + var2.getString("statsDataId", "");
+        } else {
+            StringBuilder var3 = new StringBuilder(String.valueOf(var4 + "&statsDataId=" + var2.getString("statsDataId", "")));
+            if (var2.getString("lvsearch", "").equals("")) {
+                var4 = "";
+            } else {
+                var4 = "&lvTab=" + var2.getString("lvsearch", "");
+            }
+
+            var4 = var3.append(var4).toString();
+            if (var2.getInt("cdsearchspinner", 0) == 0) {
+                var3 = new StringBuilder(String.valueOf(var4));
+                if (var2.getString("cd1", "").equals("")) {
+                    var4 = "";
+                } else {
+                    var4 = "&cdTab=" + var2.getString("cd1", "");
+                }
+
+                var4 = var3.append(var4).toString();
+            } else {
+                var3 = new StringBuilder(String.valueOf(var4));
+                if (var2.getString("cdtabfrom", "").equals("")) {
+                    var4 = "";
+                } else {
+                    var4 = "&cdTabFrom=" + var2.getString("cdtabfrom", "");
+                }
+
+                var3 = new StringBuilder(String.valueOf(var3.append(var4).toString()));
+                if (var2.getString("cdtabto", "").equals("")) {
+                    var4 = "";
+                } else {
+                    var4 = "&cdTabTo=" + var2.getString("cdtabto", "");
+                }
+
+                var4 = var3.append(var4).toString();
+            }
+
+            var3 = new StringBuilder(String.valueOf(var4));
+            if (var2.getString("timelvsearch", "").equals("")) {
+                var4 = "";
+            } else {
+                var4 = "&lvTime=" + var2.getString("timelvsearch", "");
+            }
+
+            var4 = var3.append(var4).toString();
+            if (var2.getInt("timecdsearchspinner", 0) == 0) {
+                var3 = new StringBuilder(String.valueOf(var4));
+                if (var2.getString("cd1", "").equals("")) {
+                    var4 = "";
+                } else {
+                    var4 = "&cdTime=" + var2.getString("timecd1", "");
+                }
+
+                var4 = var3.append(var4).toString();
+            } else {
+                var3 = new StringBuilder(String.valueOf(var4));
+                if (var2.getString("timecdtabfrom", "").equals("")) {
+                    var4 = "";
+                } else {
+                    var4 = "&cdTimeFrom=" + var2.getString("timecdtabfrom", "");
+                }
+
+                var3 = new StringBuilder(String.valueOf(var3.append(var4).toString()));
+                if (var2.getString("timecdtabto", "").equals("")) {
+                    var4 = "";
+                } else {
+                    var4 = "&cdTimeTo=" + var2.getString("timecdtabto", "");
+                }
+
+                var4 = var3.append(var4).toString();
+            }
+
+            var3 = new StringBuilder(String.valueOf(var4));
+            if (var2.getString("arealvsearch", "").equals("")) {
+                var4 = "";
+            } else {
+                var4 = "&lvArea=" + var2.getString("arealvsearch", "");
+            }
+
+            var4 = var3.append(var4).toString();
+            if (var2.getInt("areacdsearchspinner", 0) == 0) {
+                var3 = new StringBuilder(String.valueOf(var4));
+                if (var2.getString("cd1", "").equals("")) {
+                    var4 = "";
+                } else {
+                    var4 = "&cdArea=" + var2.getString("areacd1", "");
+                }
+
+                var4 = var3.append(var4).toString();
+            } else {
+                var3 = new StringBuilder(String.valueOf(var4));
+                if (var2.getString("areacdtabfrom", "").equals("")) {
+                    var4 = "";
+                } else {
+                    var4 = "&cdAreaFrom=" + var2.getString("areacdtabfrom", "");
+                }
+
+                var3 = new StringBuilder(String.valueOf(var3.append(var4).toString()));
+                if (var2.getString("timecdtabto", "").equals("")) {
+                    var4 = "";
+                } else {
+                    var4 = "&cdAreaTo=" + var2.getString("areacdtabto", "");
+                }
+
+                var4 = var3.append(var4).toString();
+            }
+
+            var3 = new StringBuilder(String.valueOf(var4));
+            if (var2.getString("setstartPositon", "").equals("")) {
+                var4 = "";
+            } else {
+                var4 = "&startPositon=" + var2.getString("setstartPositon", "");
+            }
+
+            var3 = new StringBuilder(String.valueOf(var3.append(var4).toString()));
+            if (var2.getString("setlimit", "").equals("")) {
+                var4 = "";
+            } else {
+                var4 = "&limit=" + var2.getString("setlimit", "");
+            }
+
+            var4 = var3.append(var4).toString();
+            if (var2.getInt("metaGetFlg", 0) == 0) {
+                var4 = var4 + "&metaGetFlg=Y";
+            } else {
+                var4 = var4 + "&metaGetFlg=N";
+            }
+
+            if (var2.getInt("cntGetFlg", 0) == 0) {
+                var4 = var4 + "&cntGetFlg=N";
+            } else {
+                var4 = var4 + "&cntGetFlg=Y";
+            }
+
+            var3 = new StringBuilder(String.valueOf(var4));
+            if (var2.getString("setcallback", "").equals("")) {
+                var4 = "";
+            } else {
+                var4 = "&callback=" + var2.getString("setcallback", "");
+            }
+
+            var4 = var3.append(var4).toString();
+        }
+
+        return var4;
+    }
+
+    public static String getChildren(Element var0, String var1) {
+        return ((Element)var0.getElementsByTagName(var1).item(0)).getFirstChild().getNodeValue();
+    }
+
+    private static Document getDocumet(InputStream var0) throws SAXException, IOException, ParserConfigurationException {
+        return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(var0);
+    }
+
+    private void printTextNode(Node var1) {
+        String var6;
+        String var7;
+        if (var1.getNodeType() == 3 && var1.getNodeValue().indexOf("\n") == -1) {
+            System.out.println("TEXT_NODE" + var1.getParentNode().getNodeName() + " = " + var1.getNodeValue());
+            var7 = var1.getParentNode().getNodeName();
+            var6 = var1.getNodeValue();
+            if (var7.equals("VALUE")) {
+                this.pagedata.putString(var7, var6);
+            } else if (var7.equals("STATISTICS_NAME")) {
+                this.pagerTitle.setText("・" + var6);
+            } else if (var7.equals("TITLE")) {
+                this.pagerTitle.append("\n・" + var6);
+            }
+        } else if (var1.getAttributes() != null) {
+            String var3 = var1.getNodeName();
+            NamedNodeMap var2 = var1.getAttributes();
+            System.out.println(var1.getParentNode().getNodeName() + " = " + var1.getNodeValue());
+            if (var3.equals("VALUE")) {
+                this.pagedata = new Bundle();
+                this.pagedata.putBundle("classdata", this.classObj);
+
+                for(int var4 = 0; var4 < var2.getLength(); ++var4) {
+                    Node var8 = var2.item(var4);
+                    String var5 = var2.item(var4).getNodeValue();
+                    System.out.println(var1.getNodeName() + ":" + var8.getNodeName() + " = " + var8.getNodeValue());
+                    this.pagedata.putString(var8.getNodeName(), var5);
+                }
+
+                this.adapter.addTab(DataItem.class, this.pagedata, this.adapter.mTabs.size() + "ページ");
+                this.pagedata.putString("No", this.adapter.mTabs.size() + "ページ目");
+            } else if (var3.equals("CLASS")) {
+                NamedNodeMap var9 = var1.getAttributes();
+                var7 = var1.getParentNode().getAttributes().getNamedItem("id").getNodeValue();
+                var6 = var1.getParentNode().getAttributes().getNamedItem("name").getNodeValue();
+                this.classObj.putString(var7 + ":" + var9.getNamedItem("code").getNodeValue(), var9.getNamedItem("name").getNodeValue() + "(" + var6 + ")");
+            }
+        }
+
+    }
+
+    private void saveHistory(String var1, String var2) {
+        SharedPreferences var3 = this.getSharedPreferences("ToukeiCheckHistory", 0);
+        SharedPreferences.Editor var4 = var3.edit();
+        var4.putString(String.valueOf(var3.getInt("historySize", 0)), this.url);
+        var4.putString("response" + String.valueOf(var3.getInt("historySize", 0)), var1);
+        var4.putString("dataname" + String.valueOf(var3.getInt("historySize", 0)), var2);
+        var4.putInt("historySize", var3.getInt("historySize", 0) + 1);
+        var4.commit();
+    }
+
+    private void traceNodes(Node var1) {
+        for(var1 = var1.getFirstChild(); var1 != null; var1 = var1.getNextSibling()) {
+            this.printTextNode(var1);
+            this.traceNodes(var1);
+        }
+
+    }
+
+    protected void onCreate(Bundle var1) {
+        super.onCreate(var1);
+        this.ac = this;
+        this.adapter = new MyFragmentStatePagerAdapter(this, this.getFragmentManager());
+        final View var2 = LayoutInflater.from(this).inflate(2130903054, (ViewGroup)null);
+        this.lvp = (LoopViewPager)var2.findViewById(2131296308);
+        this.lvp.setAdapter(this.adapter);
+        this.lvp.setOnPageChangeListener(new LoopViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int var1) {
+            }
+
+            public void onPageScrolled(int var1, float var2, int var3) {
+            }
+
+            public void onPageSelected(int var1) {
+                Log.v("myApp", "onPageSelected position=" + var1);
+                GetDataList.this.lvp.getAdapter().notifyDataSetChanged();
+                GetDataList.this.pagerNo.setText(var1 + 1 + "/" + GetDataList.this.adapter.mTabs.size());
+            }
+        });
+        this.pagerTitle = (TextView)var2.findViewById(2131296307);
+        this.pagerTitle.setTextSize(16.0F);
+        this.pagerNo = (TextView)var2.findViewById(2131296309);
+        (new Thread(new Runnable() {
+            public void run() {
+                MalformedURLException var54;
+                label148: {
+                    SAXException var53;
+                    label149: {
+                        IOException var52;
+                        label150: {
+                            ParserConfigurationException var10000;
+                            label132: {
+                                Bundle var1;
+                                boolean var10001;
+                                try {
+                                    var1 = GetDataList.this.getIntent().getExtras();
+                                } catch (MalformedURLException var34) {
+                                    var54 = var34;
+                                    var10001 = false;
+                                    break label148;
+                                } catch (SAXException var35) {
+                                    var53 = var35;
+                                    var10001 = false;
+                                    break label149;
+                                } catch (IOException var36) {
+                                    var52 = var36;
+                                    var10001 = false;
+                                    break label150;
+                                } catch (ParserConfigurationException var37) {
+                                    var10000 = var37;
+                                    var10001 = false;
+                                    break label132;
+                                }
+
+                                if (var1 == null) {
+                                    try {
+                                        GetDataList.this.url = GetDataList.this.createURL();
+                                        System.out.println("url = createURL();");
+                                    } catch (MalformedURLException var30) {
+                                        var54 = var30;
+                                        var10001 = false;
+                                        break label148;
+                                    } catch (SAXException var31) {
+                                        var53 = var31;
+                                        var10001 = false;
+                                        break label149;
+                                    } catch (IOException var32) {
+                                        var52 = var32;
+                                        var10001 = false;
+                                        break label150;
+                                    } catch (ParserConfigurationException var33) {
+                                        var10000 = var33;
+                                        var10001 = false;
+                                        break label132;
+                                    }
+                                } else {
+                                    try {
+                                        System.out.println("url = bundle.getString(url);");
+                                        GetDataList.this.url = var1.getString("url");
+                                    } catch (MalformedURLException var26) {
+                                        var54 = var26;
+                                        var10001 = false;
+                                        break label148;
+                                    } catch (SAXException var27) {
+                                        var53 = var27;
+                                        var10001 = false;
+                                        break label149;
+                                    } catch (IOException var28) {
+                                        var52 = var28;
+                                        var10001 = false;
+                                        break label150;
+                                    } catch (ParserConfigurationException var29) {
+                                        var10000 = var29;
+                                        var10001 = false;
+                                        break label132;
+                                    }
+                                }
+
+                                HttpURLConnection var39;
+                                StringBuilder var42;
+                                try {
+                                    URL var38 = new URL(GetDataList.this.url);
+                                    var39 = GetDataList.connect(var38);
+                                    System.out.println(GetDataList.this.url);
+                                    PrintStream var2x = System.out;
+                                    StringBuilder var3 = new StringBuilder(String.valueOf(var39.getResponseCode()));
+                                    var2x.println(var3.append(":").append(var39.getResponseMessage()).toString());
+                                    if (var39.getResponseCode() != 200) {
+                                        GetDataList var47 = GetDataList.this;
+                                        var42 = new StringBuilder(String.valueOf(var39.getResponseCode()));
+                                        var47.errorMsg = var42.append(":").append(var39.getResponseMessage()).toString();
+                                    }
+                                } catch (MalformedURLException var10) {
+                                    var54 = var10;
+                                    var10001 = false;
+                                    break label148;
+                                } catch (SAXException var11) {
+                                    var53 = var11;
+                                    var10001 = false;
+                                    break label149;
+                                } catch (IOException var12) {
+                                    var52 = var12;
+                                    var10001 = false;
+                                    break label150;
+                                } catch (ParserConfigurationException var13) {
+                                    var10000 = var13;
+                                    var10001 = false;
+                                    break label132;
+                                }
+
+                                while(true) {
+                                    try {
+                                        if (GetDataList.this.dataDoc != null) {
+                                            break;
+                                        }
+                                    } catch (MalformedURLException var22) {
+                                        var54 = var22;
+                                        var10001 = false;
+                                        break label148;
+                                    } catch (SAXException var23) {
+                                        var53 = var23;
+                                        var10001 = false;
+                                        break label149;
+                                    } catch (IOException var24) {
+                                        var52 = var24;
+                                        var10001 = false;
+                                        break label150;
+                                    } catch (ParserConfigurationException var25) {
+                                        var10000 = var25;
+                                        var10001 = false;
+                                        break label132;
+                                    }
+
+                                    NodeList var49;
+                                    try {
+                                        if (GetDataList.this.errorMsg != null) {
+                                            break;
+                                        }
+
+                                        GetDataList.this.dataDoc = GetDataList.getDocumet(var39.getInputStream());
+                                        var49 = GetDataList.this.dataDoc.getElementsByTagName("STATISTICAL_DATA");
+                                    } catch (MalformedURLException var18) {
+                                        var54 = var18;
+                                        var10001 = false;
+                                        break label148;
+                                    } catch (SAXException var19) {
+                                        var53 = var19;
+                                        var10001 = false;
+                                        break label149;
+                                    } catch (IOException var20) {
+                                        var52 = var20;
+                                        var10001 = false;
+                                        break label150;
+                                    } catch (ParserConfigurationException var21) {
+                                        var10000 = var21;
+                                        var10001 = false;
+                                        break label132;
+                                    }
+
+                                    int var4 = 0;
+
+                                    while(true) {
+                                        try {
+                                            if (var4 >= var49.getLength() || GetDataList.this.errorMsg != null) {
+                                                break;
+                                            }
+
+                                            GetDataList.this.error = GetDataList.this.dataDoc.getElementsByTagName("ERROR_MSG");
+                                            System.out.println(GetDataList.this.error.item(0).getFirstChild().getNodeValue());
+                                            GetDataList var44 = GetDataList.this;
+                                            Bundle var5 = new Bundle();
+                                            var44.classObj = var5;
+                                            Node var46 = var49.item(var4);
+                                            System.out.println(var46.getNodeName());
+                                            GetDataList.this.traceNodes(var46);
+                                            GetDataList var51 = GetDataList.this;
+                                            var42 = new StringBuilder(String.valueOf(var39.getResponseCode()));
+                                            var51.saveHistory(var42.append(":").append(var39.getResponseMessage()).toString(), GetDataList.this.pagerTitle.getText().toString());
+                                        } catch (MalformedURLException var14) {
+                                            var54 = var14;
+                                            var10001 = false;
+                                            break label148;
+                                        } catch (SAXException var15) {
+                                            var53 = var15;
+                                            var10001 = false;
+                                            break label149;
+                                        } catch (IOException var16) {
+                                            var52 = var16;
+                                            var10001 = false;
+                                            break label150;
+                                        } catch (ParserConfigurationException var17) {
+                                            var10000 = var17;
+                                            var10001 = false;
+                                            break label132;
+                                        }
+
+                                        ++var4;
+                                    }
+                                }
+
+                                try {
+                                    Activity var48 = GetDataList.this.ac;
+                                    Runnable var50 = new Runnable() {
+                                        public void run() {
+                                            GetDataList.this.setContentView(var2);
+                                            GetDataList.this.pagerNo.setText("1/" + GetDataList.this.adapter.mTabs.size());
+                                        }
+                                    };
+                                    var48.runOnUiThread(var50);
+                                    return;
+                                } catch (MalformedURLException var6) {
+                                    var54 = var6;
+                                    var10001 = false;
+                                    break label148;
+                                } catch (SAXException var7) {
+                                    var53 = var7;
+                                    var10001 = false;
+                                    break label149;
+                                } catch (IOException var8) {
+                                    var52 = var8;
+                                    var10001 = false;
+                                    break label150;
+                                } catch (ParserConfigurationException var9) {
+                                    var10000 = var9;
+                                    var10001 = false;
+                                }
+                            }
+
+                            ParserConfigurationException var40 = var10000;
+                            var40.printStackTrace();
+                            return;
+                        }
+
+                        IOException var41 = var52;
+                        var41.printStackTrace();
+                        return;
+                    }
+
+                    SAXException var43 = var53;
+                    var43.printStackTrace();
+                    return;
+                }
+
+                MalformedURLException var45 = var54;
+                var45.printStackTrace();
+            }
+        })).start();
+    }
+
+    public class MyFragmentStatePagerAdapter extends FragmentPagerAdapter {
+        private Handler handler = new Handler();
+        private Activity mContext;
+        private final ArrayList<TabInfo> mTabs = new ArrayList();
+        ViewPager mViewPager;
+
+        public MyFragmentStatePagerAdapter(Activity var2, FragmentManager var3) {
+            super(var2.getFragmentManager());
+            this.mContext = var2;
+        }
+
+        public void addTab(Class<?> var1, Bundle var2, String var3) {
+            TabInfo var4 = new TabInfo(var1, var2, var3);
+            this.mTabs.add(var4);
+            this.notifyDataSetChanged();
+        }
+
+        public int getCount() {
+            int var1;
+            if (this.mTabs.size() != 0) {
+                var1 = this.mTabs.size();
+            } else {
+                var1 = 1;
+            }
+
+            return var1;
+        }
+
+        public Fragment getItem(int var1) {
+            Object var3;
+            if (this.mTabs.size() != 0) {
+                System.out.println("正常");
+                TabInfo var2 = (TabInfo)this.mTabs.get(var1);
+                var3 = new DataItem();
+                ((DataItem)var3).setArguments(var2.args);
+            } else {
+                System.out.println("mTabsが0件");
+                var3 = new ErrorItem();
+                Bundle var4 = new Bundle();
+                var4.putString("ERROR_MSG", GetDataList.this.errorMsg);
+                var4.putString("ERROR_URL", GetDataList.this.url);
+                ((ErrorItem)var3).setArguments(var4);
+            }
+
+            return (Fragment)var3;
+        }
+
+        public int getItemPosition(Object var1) {
+            return -2;
+        }
+
+        private final class TabInfo {
+            private final Bundle args;
+            private final Class<?> clazz;
+            private final String tabTitle;
+
+            TabInfo(Class<?> var2, Bundle var3, String var4) {
+                this.clazz = var2;
+                this.args = var3;
+                this.tabTitle = var4;
+            }
+        }
+    }
+}
