@@ -1,0 +1,156 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package com.example.toukei;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+public class MainActivity extends Activity {
+    public static final int MP = -1;
+    public static final int WC = -2;
+    EditText appId;
+    Button checkHistory;
+    Spinner filetype;
+    Button finish;
+    Spinner lang;
+    Spinner request;
+    Button sendRequest;
+    Button setting;
+
+    public MainActivity() {
+    }
+
+    private void checkHistory() {
+        Intent var1 = new Intent();
+        var1.setClassName("com.example.toukei", "com.example.toukei.CheckHistory");
+        this.startActivity(var1);
+    }
+
+    private void loadData() {
+        SharedPreferences var1 = this.getSharedPreferences("ToukeiCommonParam", 0);
+        this.filetype.setSelection(var1.getInt("filetype", 0));
+        this.request.setSelection(var1.getInt("request", 0));
+        this.appId.setText(var1.getString("appid", ""));
+        this.lang.setSelection(var1.getInt("lang", 0));
+    }
+
+    private void sendRequest() {
+        Intent var1 = new Intent();
+        switch (this.request.getSelectedItemPosition()) {
+            case 0:
+                var1.setClassName("com.example.toukei", "com.example.toukei.ListData");
+                this.startActivity(var1);
+                break;
+            case 1:
+                var1.setClassName("com.example.toukei", "com.example.toukei.MetaData");
+                this.startActivity(var1);
+                break;
+            case 2:
+                var1.setClassName("com.example.toukei", "com.example.toukei.GetDataList");
+                this.startActivity(var1);
+        }
+
+    }
+
+    private void setListener(View var1) {
+        switch (var1.getId()) {
+            case 2131296260:
+                var1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View var1) {
+                        MainActivity.this.setting();
+                    }
+                });
+                break;
+            case 2131296261:
+                var1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View var1) {
+                        MainActivity.this.sendRequest();
+                    }
+                });
+                break;
+            case 2131296262:
+                var1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View var1) {
+                        MainActivity.this.checkHistory();
+                    }
+                });
+                break;
+            case 2131296263:
+                var1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View var1) {
+                        MainActivity.this.finish();
+                    }
+                });
+        }
+
+    }
+
+    private void setting() {
+        Intent var1 = new Intent();
+        switch (this.request.getSelectedItemPosition()) {
+            case 0:
+                var1.setClassName("com.example.toukei", "com.example.toukei.ListSetting");
+                this.startActivity(var1);
+                break;
+            case 1:
+                var1.setClassName("com.example.toukei", "com.example.toukei.MetaSetting");
+                this.startActivity(var1);
+                break;
+            case 2:
+                var1.setClassName("com.example.toukei", "com.example.toukei.DataGetSetting");
+                this.startActivity(var1);
+        }
+
+    }
+
+    public void finish() {
+        this.saveData();
+        super.finish();
+    }
+
+    protected void onCreate(Bundle var1) {
+        super.onCreate(var1);
+        View var2 = LayoutInflater.from(this).inflate(2130903040, (ViewGroup)null);
+        this.filetype = (Spinner)var2.findViewById(2131296256);
+        this.request = (Spinner)var2.findViewById(2131296257);
+        this.appId = (EditText)var2.findViewById(2131296258);
+        this.lang = (Spinner)var2.findViewById(2131296259);
+        this.setting = (Button)var2.findViewById(2131296260);
+        this.sendRequest = (Button)var2.findViewById(2131296261);
+        this.checkHistory = (Button)var2.findViewById(2131296262);
+        this.finish = (Button)var2.findViewById(2131296263);
+        this.setListener(this.setting);
+        this.setListener(this.sendRequest);
+        this.setListener(this.checkHistory);
+        this.setListener(this.finish);
+        this.getWindow().setSoftInputMode(3);
+        this.setContentView(var2);
+        this.loadData();
+    }
+
+    protected void onPause() {
+        this.saveData();
+        super.onPause();
+    }
+
+    public void saveData() {
+        SharedPreferences.Editor var1 = this.getSharedPreferences("ToukeiCommonParam", 0).edit();
+        var1.putInt("filetype", this.filetype.getSelectedItemPosition());
+        var1.putInt("request", this.request.getSelectedItemPosition());
+        //ここで統計用appIDを設定
+        var1.putString("appid", "");
+        var1.putInt("lang", this.lang.getSelectedItemPosition());
+        var1.commit();
+    }
+}
