@@ -1,0 +1,113 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package com.example.toukei;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+public class CheckHistory extends Activity {
+    Button clearHistory;
+    LayoutInflater factory;
+    LinearLayout historybox;
+    TextView tv;
+    LinearLayout view;
+
+    public CheckHistory() {
+    }
+
+    private void clearHistory() {
+        SharedPreferences.Editor var1 = this.getSharedPreferences("ToukeiCheckHistory", 0).edit();
+        var1.clear();
+        var1.commit();
+        this.historybox.removeAllViews();
+    }
+
+    private void creatView() {
+        SharedPreferences var1 = this.getSharedPreferences("ToukeiCheckHistory", 0);
+        int var2 = var1.getInt("historySize", 0);
+
+        for(int var3 = 0; var3 < var2; ++var3) {
+            LinearLayout var4 = (LinearLayout)this.factory.inflate(2130903052, (ViewGroup)null);
+            TextView var5 = (TextView)var4.findViewById(2131296303);
+            TextView var6 = (TextView)var4.findViewById(2131296304);
+            TextView var7 = (TextView)var4.findViewById(2131296305);
+            String var8 = String.valueOf(var3);
+            var5.setText(var1.getString("dataname" + var8, "test"));
+            var6.setText(var1.getString("response" + var8, "test"));
+            var7.setText(var1.getString(var8, "test"));
+            var4.setTag(var1.getString(var8, "test"));
+            this.setListener(var4);
+            this.historybox.addView(var4);
+        }
+
+        this.setContentView(this.view);
+    }
+
+    private void setListener(View var1) {
+        switch (var1.getId()) {
+            case 2131296302:
+                var1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View var1) {
+                        CheckHistory.this.clearHistory();
+                    }
+                });
+                break;
+            default:
+                if (var1.getTag().toString().indexOf("getStatsList") != -1) {
+                    var1.setOnClickListener(new View.OnClickListener(new Intent()) {
+                        {
+                            this.val$listintent = var2;
+                        }
+
+                        public void onClick(View var1) {
+                            this.val$listintent.setClassName("com.example.toukei", "com.example.toukei.ListData");
+                            this.val$listintent.putExtra("url", var1.getTag().toString());
+                            CheckHistory.this.startActivity(this.val$listintent);
+                        }
+                    });
+                } else if (var1.getTag().toString().indexOf("getMetaInfo") != -1) {
+                    var1.setOnClickListener(new View.OnClickListener() {
+                        final Intent metaintent = new Intent();
+
+                        public void onClick(View var1) {
+                            this.metaintent.setClassName("com.example.toukei", "com.example.toukei.MetaData");
+                            this.metaintent.putExtra("url", var1.getTag().toString());
+                            CheckHistory.this.startActivity(this.metaintent);
+                        }
+                    });
+                } else if (var1.getTag().toString().indexOf("getStatsData") != -1) {
+                    var1.setOnClickListener(new View.OnClickListener() {
+                        final Intent dataintent = new Intent();
+
+                        public void onClick(View var1) {
+                            this.dataintent.setClassName("com.example.toukei", "com.example.toukei.GetDataList");
+                            this.dataintent.putExtra("url", var1.getTag().toString());
+                            CheckHistory.this.startActivity(this.dataintent);
+                        }
+                    });
+                }
+        }
+
+    }
+
+    protected void onCreate(Bundle var1) {
+        super.onCreate(var1);
+        this.factory = LayoutInflater.from(this);
+        this.view = (LinearLayout)this.factory.inflate(2130903051, (ViewGroup)null);
+        this.historybox = (LinearLayout)this.view.findViewById(2131296301);
+        this.clearHistory = (Button)this.view.findViewById(2131296302);
+        this.setListener(this.clearHistory);
+        this.creatView();
+    }
+}
