@@ -1,0 +1,95 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package com.example.toukei;
+
+import android.app.Activity;
+import android.app.Fragment;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+public class ListItem extends Fragment {
+    Bundle bundle;
+    Button setGetData;
+    Button setMeta;
+    LinearLayout view;
+
+    public ListItem() {
+    }
+
+    private void setListener(View var1) {
+        switch (var1.getId()) {
+            case 2131296312:
+                var1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View var1) {
+                        Activity var2 = ListItem.this.getActivity();
+                        ListItem.this.getActivity();
+                        SharedPreferences.Editor var3 = var2.getSharedPreferences("ToukeiMetaParam", 0).edit();
+                        var3.putString("statsDataId", ListItem.this.bundle.getString("LIST_INFid"));
+                        var3.commit();
+                        Intent var4 = new Intent();
+                        var4.setClassName("com.example.toukei", "com.example.toukei.MetaData");
+                        ListItem.this.startActivity(var4);
+                    }
+                });
+                break;
+            case 2131296313:
+                var1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View var1) {
+                        Activity var2 = ListItem.this.getActivity();
+                        ListItem.this.getActivity();
+                        SharedPreferences.Editor var3 = var2.getSharedPreferences("ToukeiDataGetParam", 0).edit();
+                        var3.putString("statsDataId", ListItem.this.bundle.getString("LIST_INFid"));
+                        var3.commit();
+                        Intent var4 = new Intent();
+                        var4.setClassName("com.example.toukei", "com.example.toukei.DataGetSetting");
+                        ListItem.this.startActivity(var4);
+                    }
+                });
+        }
+
+    }
+
+    public View onCreateView(LayoutInflater var1, ViewGroup var2, Bundle var3) {
+        if (this.view == null) {
+            this.bundle = this.getArguments();
+            this.view = (LinearLayout)LayoutInflater.from(this.getActivity()).inflate(2130903055, (ViewGroup)null);
+            ((TextView)this.view.findViewById(2131296311)).setText("統計表ID\n" + this.bundle.getString("LIST_INFid") + "\n");
+            this.setMeta = (Button)this.view.findViewById(2131296312);
+            this.setListener(this.setMeta);
+            this.setGetData = (Button)this.view.findViewById(2131296313);
+            this.setListener(this.setGetData);
+            ((TextView)this.view.findViewById(2131296314)).setText("政府統計名\n" + this.bundle.getString("STAT_NAME") + "\n");
+            ((TextView)this.view.findViewById(2131296315)).setText("政府統計コード\n" + this.bundle.getString("STAT_NAMEcode") + "\n");
+            ((TextView)this.view.findViewById(2131296316)).setText("作成機関名\n" + this.bundle.getString("GOV_ORG") + "\n");
+            ((TextView)this.view.findViewById(2131296317)).setText("作成機関コード\n" + this.bundle.getString("GOV_ORGcode") + "\n");
+            ((TextView)this.view.findViewById(2131296318)).setText("提供統計名及び提供分類名\n" + this.bundle.getString("STATISTICS_NAME") + "\n");
+            ((TextView)this.view.findViewById(2131296319)).setText("表題\n" + this.bundle.getString("TITLE") + "\n");
+            ((TextView)this.view.findViewById(2131296320)).setText("表番号\n" + this.bundle.getString("TITLENo") + "\n");
+            ((TextView)this.view.findViewById(2131296321)).setText("提供周期\n" + this.bundle.getString("CYCLE") + "\n");
+            ((TextView)this.view.findViewById(2131296322)).setText("調査年月\n" + this.bundle.getString("SURVEY_DATE") + "\n");
+            ((TextView)this.view.findViewById(2131296323)).setText("公開日\n" + this.bundle.getString("OPEN_DATE") + "\n");
+            ((TextView)this.view.findViewById(2131296324)).setText("小地域属性\n" + this.bundle.getString("SMALL_AREA") + "\n");
+            TextView var4 = new TextView(this.getActivity());
+            var4.setText("位置確認\n" + this.bundle.getString("No") + "\n");
+            ((LinearLayout)this.view.findViewById(2131296310)).addView(var4);
+        } else {
+            ViewGroup var5 = (ViewGroup)this.view.getParent();
+            if (var5 != null) {
+                var5.removeView(this.view);
+            }
+        }
+
+        System.out.println(this.getArguments().getString("No"));
+        return this.view;
+    }
+}
