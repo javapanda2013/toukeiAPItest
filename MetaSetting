@@ -1,0 +1,69 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package com.example.toukei;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class MetaSetting extends Activity {
+    Button backto;
+    EditText statsDataId;
+
+    public MetaSetting() {
+    }
+
+    private void loadData() {
+        SharedPreferences var1 = this.getSharedPreferences("ToukeiMetaParam", 0);
+        this.statsDataId.setText(var1.getString("statsDataId", ""));
+    }
+
+    private void setListener(View var1) {
+        switch (var1.getId()) {
+            case 2131296264:
+                var1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View var1) {
+                        Intent var2 = new Intent();
+                        var2.setClassName("com.example.toukei", "com.example.toukei.MainActivity");
+                        MetaSetting.this.startActivity(var2);
+                    }
+                });
+            default:
+        }
+    }
+
+    public void finish() {
+        this.saveData();
+        super.finish();
+    }
+
+    protected void onCreate(Bundle var1) {
+        super.onCreate(var1);
+        View var2 = LayoutInflater.from(this).inflate(2130903061, (ViewGroup)null);
+        this.statsDataId = (EditText)var2.findViewById(2131296339);
+        this.backto = (Button)var2.findViewById(2131296264);
+        this.setListener(this.backto);
+        this.setContentView(var2);
+        this.loadData();
+    }
+
+    protected void onPause() {
+        this.saveData();
+        super.onPause();
+    }
+
+    public void saveData() {
+        SharedPreferences.Editor var1 = this.getSharedPreferences("ToukeiMetaParam", 0).edit();
+        var1.putString("statsDataId", this.statsDataId.getText().toString());
+        var1.commit();
+    }
+}
