@@ -1,0 +1,532 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package com.example.toukei;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+public class DataGetSetting extends Activity {
+    LinearLayout areacd;
+    EditText areacd1;
+    LinearLayout areacd2;
+    Spinner areacdsearchspinner;
+    EditText areacdtabfrom;
+    EditText areacdtabto;
+    LinearLayout arealv;
+    EditText arealvsearch;
+    Spinner arealvsearchspinner;
+    Button backto;
+    LinearLayout cd;
+    EditText cd1;
+    LinearLayout cd2;
+    Spinner cdsearchspinner;
+    EditText cdtabfrom;
+    EditText cdtabto;
+    Spinner cntGetFlg;
+    Spinner dataSetspinner;
+    LayoutInflater factory;
+    String id;
+    SharedPreferences.Editor infIdEditor;
+    SharedPreferences infid;
+    EditText lvsearch;
+    Spinner lvsearchspinner;
+    Spinner metaGetFlg;
+    View param;
+    EditText setcallback;
+    EditText setlimit;
+    EditText setstartPositon;
+    LinearLayout statdata_param;
+    EditText statsDataId;
+    LinearLayout timecd;
+    EditText timecd1;
+    LinearLayout timecd2;
+    Spinner timecdsearchspinner;
+    EditText timecdtabfrom;
+    EditText timecdtabto;
+    LinearLayout timelv;
+    EditText timelvsearch;
+    Spinner timelvsearchspinner;
+
+    public DataGetSetting() {
+    }
+
+    private void loadData() {
+        SharedPreferences var1 = this.getSharedPreferences("ToukeiDataGetParam", 0);
+        this.dataSetspinner.setSelection(var1.getInt("dataSetspinner", 0));
+        this.statsDataId.setText(var1.getString("statsDataId", ""));
+        this.lvsearchspinner.setSelection(var1.getInt("lvsearchspinner", 0));
+        this.lvsearch.setText(var1.getString("lvsearch", ""));
+        this.cdsearchspinner.setSelection(var1.getInt("cdsearchspinner", 0));
+        this.cd1.setText(var1.getString("cd1", ""));
+        this.cdtabfrom.setText(var1.getString("cdtabfrom", ""));
+        this.cdtabto.setText(var1.getString("cdtabto", ""));
+        this.timelvsearchspinner.setSelection(var1.getInt("timelvsearchspinner", 0));
+        this.timelvsearch.setText(var1.getString("timelvsearch", ""));
+        this.timecdsearchspinner.setSelection(var1.getInt("timecdsearchspinner", 0));
+        this.timecd1.setText(var1.getString("timecd1", ""));
+        this.timecdtabfrom.setText(var1.getString("timecdtabfrom", ""));
+        this.timecdtabto.setText(var1.getString("timecdtabto", ""));
+        this.arealvsearchspinner.setSelection(var1.getInt("timelvsearchspinner", 0));
+        this.arealvsearch.setText(var1.getString("timelvsearch", ""));
+        this.areacdsearchspinner.setSelection(var1.getInt("areacdsearchspinner", 0));
+        this.areacd1.setText(var1.getString("areacd1", ""));
+        this.areacdtabfrom.setText(var1.getString("areacdtabfrom", ""));
+        this.areacdtabto.setText(var1.getString("areacdtabto", ""));
+        this.setstartPositon.setText(var1.getString("setstartPositon", ""));
+        this.setlimit.setText(var1.getString("setlimit", ""));
+        this.metaGetFlg.setSelection(var1.getInt("metaGetFlg", 0));
+        this.cntGetFlg.setSelection(var1.getInt("cntGetFlg", 0));
+        this.setcallback.setText(var1.getString("setcallback", ""));
+    }
+
+    private LinearLayout loadMeta() {
+        LinearLayout var1 = (LinearLayout)this.factory.inflate(2130903064, (ViewGroup)null);
+        this.id = this.statsDataId.getText().toString();
+        this.infid = this.getSharedPreferences("ToukeiINF_id" + this.id, 0);
+        this.infIdEditor = this.infid.edit();
+        HashSet var2 = (HashSet)this.infid.getStringSet("keyset", (Set)null);
+        if (var2 != null) {
+            System.out.println(this.infid.getInt("catCount", 0));
+            int var3 = this.infid.getInt("catCount", 0);
+            LinearLayout var4 = (LinearLayout)this.factory.inflate(2130903064, (ViewGroup)null);
+            ArrayList var5 = new ArrayList();
+
+            int var6;
+            for(var6 = 0; var6 < var3; ++var6) {
+                var5.add((Object)null);
+            }
+
+            LinearLayout var7 = (LinearLayout)this.factory.inflate(2130903064, (ViewGroup)null);
+            LinearLayout var8 = (LinearLayout)this.factory.inflate(2130903064, (ViewGroup)null);
+            Iterator var16 = var2.iterator();
+
+            while(true) {
+                while(var16.hasNext()) {
+                    String var9 = (String)var16.next();
+                    ArrayAdapter var11;
+                    Spinner var17;
+                    CheckBox var18;
+                    TextView var19;
+                    LinearLayout var21;
+                    if (var9.equals("tab")) {
+                        var1.addView(var4);
+                        var3 = this.infid.getInt("tab:count", 0);
+                        var17 = new Spinner(this);
+                        var11 = new ArrayAdapter(this, 2130903045);
+                        var17.setAdapter(var11);
+                        var19 = new TextView(this);
+                        var21 = (LinearLayout)this.factory.inflate(2130903064, (ViewGroup)null);
+                        var19.setText("【" + var9 + "】");
+                        var21.addView(var19);
+                        var4.addView(var21);
+                        var4.addView(var17);
+
+                        for(var6 = 0; var6 < var3; ++var6) {
+                            var18 = new CheckBox(this);
+                            var18.setText("code:" + this.infid.getString(var9 + ":" + var6 + "code", "a") + " name:" + this.infid.getString(var9 + ":" + var6 + "name", "a") + " level:" + this.infid.getString(var9 + ":" + var6 + "level", "a"));
+                            if (!var18.getText().toString().equals("aaa")) {
+                                var11.add(var18.getText().toString());
+                            }
+                        }
+                    } else if (var9.equals("area")) {
+                        var1.addView(var7);
+                        var3 = this.infid.getInt("area:count", 0);
+                        var17 = new Spinner(this);
+                        var11 = new ArrayAdapter(this, 2130903045);
+                        var17.setAdapter(var11);
+                        var19 = new TextView(this);
+                        var21 = (LinearLayout)this.factory.inflate(2130903064, (ViewGroup)null);
+                        var19.setText("【" + var9 + "】");
+                        var21.addView(var19);
+                        var7.addView(var21);
+                        var7.addView(var17);
+
+                        for(var6 = 0; var6 < var3; ++var6) {
+                            var18 = new CheckBox(this);
+                            var18.setText("code:" + this.infid.getString(var9 + ":" + var6 + "code", "a") + " name:" + this.infid.getString(var9 + ":" + var6 + "name", "a") + " level:" + this.infid.getString(var9 + ":" + var6 + "level", "a"));
+                            if (!var18.getText().toString().equals("aaa")) {
+                                var11.add(var18.getText().toString());
+                            }
+                        }
+                    } else {
+                        LinearLayout var12;
+                        TextView var13;
+                        if (var9.equals("time")) {
+                            var1.addView(var8);
+                            var3 = this.infid.getInt("time:count", 0);
+                            var17 = new Spinner(this);
+                            var11 = new ArrayAdapter(this, 2130903045);
+                            var17.setAdapter(var11);
+                            var13 = new TextView(this);
+                            var12 = (LinearLayout)this.factory.inflate(2130903064, (ViewGroup)null);
+                            var13.setText("【" + var9 + "】");
+                            var12.addView(var13);
+                            var8.addView(var12);
+                            var8.addView(var17);
+
+                            for(var6 = 0; var6 < var3; ++var6) {
+                                var18 = new CheckBox(this);
+                                var18.setText("code:" + this.infid.getString(var9 + ":" + var6 + "code", "a") + " name:" + this.infid.getString(var9 + ":" + var6 + "name", "a") + " level:" + this.infid.getString(var9 + ":" + var6 + "level", "a"));
+                                if (!var18.getText().toString().equals("aaa")) {
+                                    var11.add(var18.getText().toString());
+                                }
+                            }
+                        } else if (var9.indexOf("cat") != -1) {
+                            int var14 = Integer.parseInt(var9.replace("cat", ""));
+                            var12 = (LinearLayout)this.factory.inflate(2130903064, (ViewGroup)null);
+                            Spinner var15 = new Spinner(this);
+                            var11 = new ArrayAdapter(this, 2130903045);
+                            var15.setAdapter(var11);
+                            var13 = new TextView(this);
+                            LinearLayout var10 = (LinearLayout)this.factory.inflate(2130903064, (ViewGroup)null);
+                            var13.setText("【" + var9 + "】");
+                            var10.addView(var13);
+                            var12.addView(var10);
+                            var12.addView(var15);
+                            var3 = this.infid.getInt(var9 + ":count", 0);
+
+                            for(var6 = 0; var6 < var3; ++var6) {
+                                CheckBox var20 = new CheckBox(this);
+                                var20.setTag(this.id + "cat" + "code:" + this.infid.getString(var9 + ":" + var6 + "code", "a") + " name:" + this.infid.getString(var9 + ":" + var6 + "name", "a") + " level:" + this.infid.getString(var9 + ":" + var6 + "level", "a"));
+                                this.setListener(var20);
+                                var20.setText("code:" + this.infid.getString(var9 + ":" + var6 + "code", "a") + " name:" + this.infid.getString(var9 + ":" + var6 + "name", "a") + " level:" + this.infid.getString(var9 + ":" + var6 + "level", "a"));
+                                if (!var20.getText().toString().equals("aaa")) {
+                                    var11.add(var20.getText().toString());
+                                }
+                            }
+
+                            var5.set(var14, var12);
+                        }
+                    }
+                }
+
+                for(var6 = 0; var6 < var5.size(); ++var6) {
+                    var4 = (LinearLayout)var5.get(var6);
+                    if (var4 != null) {
+                        var1.addView(var4);
+                    }
+                }
+                break;
+            }
+        }
+
+        return var1;
+    }
+
+    private void setListener(View var1) {
+        switch (var1.getId()) {
+            case 2131296264:
+                var1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View var1) {
+                        Intent var2 = new Intent();
+                        var2.setClassName("com.example.toukei", "com.example.toukei.MainActivity");
+                        DataGetSetting.this.startActivity(var2);
+                    }
+                });
+                break;
+            case 2131296277:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                DataGetSetting.this.statdata_param.addView(DataGetSetting.this.param);
+                                DataGetSetting.this.statdata_param.addView(DataGetSetting.this.loadMeta());
+                                Button var6 = new Button(DataGetSetting.this.getApplicationContext());
+                                var6.setText("分類事項の設定ページ");
+                                var6.setTextColor(-16777216);
+                                var6.setOnClickListener(new View.OnClickListener() {
+                                    public void onClick(View var1) {
+                                        Intent var2 = new Intent();
+                                        var2.setClassName("com.example.toukei", "com.example.toukei.ExlistTest");
+                                        DataGetSetting.this.startActivity(var2);
+                                    }
+                                });
+                                DataGetSetting.this.statdata_param.addView(var6);
+                                break;
+                            case 1:
+                                DataGetSetting.this.statdata_param.removeAllViews();
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296281:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                DataGetSetting.this.lvsearch.setHint(2131034155);
+                                break;
+                            case 1:
+                                DataGetSetting.this.lvsearch.setHint(2131034156);
+                                break;
+                            case 2:
+                                DataGetSetting.this.lvsearch.setHint(2131034157);
+                                break;
+                            case 3:
+                                DataGetSetting.this.lvsearch.setHint(2131034158);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296283:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                DataGetSetting.this.cd.removeAllViews();
+                                DataGetSetting.this.cd.addView(DataGetSetting.this.cd1);
+                                break;
+                            case 1:
+                                DataGetSetting.this.cd.removeAllViews();
+                                DataGetSetting.this.cd.addView(DataGetSetting.this.cd2);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296286:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                DataGetSetting.this.timelvsearch.setHint(2131034155);
+                                break;
+                            case 1:
+                                DataGetSetting.this.timelvsearch.setHint(2131034156);
+                                break;
+                            case 2:
+                                DataGetSetting.this.timelvsearch.setHint(2131034157);
+                                break;
+                            case 3:
+                                DataGetSetting.this.timelvsearch.setHint(2131034158);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296288:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                DataGetSetting.this.timecd.removeAllViews();
+                                DataGetSetting.this.timecd.addView(DataGetSetting.this.timecd1);
+                                break;
+                            case 1:
+                                DataGetSetting.this.timecd.removeAllViews();
+                                DataGetSetting.this.timecd.addView(DataGetSetting.this.timecd2);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296291:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                DataGetSetting.this.arealvsearch.setHint(2131034155);
+                                break;
+                            case 1:
+                                DataGetSetting.this.arealvsearch.setHint(2131034156);
+                                break;
+                            case 2:
+                                DataGetSetting.this.arealvsearch.setHint(2131034157);
+                                break;
+                            case 3:
+                                DataGetSetting.this.arealvsearch.setHint(2131034158);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            case 2131296293:
+                ((Spinner)var1).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> var1, View var2, int var3, long var4) {
+                        switch (var3) {
+                            case 0:
+                                DataGetSetting.this.areacd.removeAllViews();
+                                DataGetSetting.this.areacd.addView(DataGetSetting.this.areacd1);
+                                break;
+                            case 1:
+                                DataGetSetting.this.areacd.removeAllViews();
+                                DataGetSetting.this.areacd.addView(DataGetSetting.this.areacd2);
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> var1) {
+                    }
+                });
+                break;
+            default:
+                final CheckBox var3 = (CheckBox)var1;
+                final String var2 = var3.getTag().toString();
+                var3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    public void onCheckedChanged(CompoundButton var1, boolean var2x) {
+                        DataGetSetting.this.infIdEditor.putBoolean(var2, var3.isChecked());
+                        DataGetSetting.this.infIdEditor.commit();
+                    }
+                });
+                var3.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    public void onFocusChange(View var1, boolean var2x) {
+                        var3.setChecked(DataGetSetting.this.infid.getBoolean(var2, false));
+                    }
+                });
+                var3.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                    public void onCreateContextMenu(ContextMenu var1, View var2x, ContextMenu.ContextMenuInfo var3x) {
+                        var3.setChecked(DataGetSetting.this.infid.getBoolean(var2, false));
+                    }
+                });
+                var3.setChecked(this.infid.getBoolean(var2, false));
+        }
+
+    }
+
+    public void finish() {
+        this.saveData();
+        super.finish();
+    }
+
+    protected void onCreate(Bundle var1) {
+        super.onCreate(var1);
+        this.factory = LayoutInflater.from(this);
+        View var2 = this.factory.inflate(2130903049, (ViewGroup)null);
+        this.param = this.factory.inflate(2130903050, (ViewGroup)null);
+        this.dataSetspinner = (Spinner)var2.findViewById(2131296277);
+        this.statsDataId = (EditText)var2.findViewById(2131296278);
+        this.statdata_param = (LinearLayout)var2.findViewById(2131296279);
+        this.lvsearchspinner = (Spinner)this.param.findViewById(2131296281);
+        this.lvsearch = (EditText)this.param.findViewById(2131296282);
+        this.cd = (LinearLayout)this.param.findViewById(2131296284);
+        this.cdsearchspinner = (Spinner)this.param.findViewById(2131296283);
+        this.cd1 = (EditText)this.factory.inflate(2130903043, (ViewGroup)null);
+        this.cd2 = (LinearLayout)this.factory.inflate(2130903044, (ViewGroup)null);
+        this.cdtabfrom = (EditText)this.cd2.findViewById(2131296268);
+        this.cdtabto = (EditText)this.cd2.findViewById(2131296269);
+        this.timelv = (LinearLayout)this.param.findViewById(2131296285);
+        this.timelvsearchspinner = (Spinner)this.param.findViewById(2131296286);
+        this.timelvsearch = (EditText)this.param.findViewById(2131296287);
+        this.timecdsearchspinner = (Spinner)this.param.findViewById(2131296288);
+        this.timecd = (LinearLayout)this.param.findViewById(2131296289);
+        this.timecd1 = (EditText)this.factory.inflate(2130903043, (ViewGroup)null);
+        this.timecd2 = (LinearLayout)this.factory.inflate(2130903044, (ViewGroup)null);
+        this.timecdtabfrom = (EditText)this.timecd2.findViewById(2131296268);
+        this.timecdtabto = (EditText)this.timecd2.findViewById(2131296269);
+        this.arealv = (LinearLayout)this.param.findViewById(2131296290);
+        this.arealvsearchspinner = (Spinner)this.param.findViewById(2131296291);
+        this.arealvsearch = (EditText)this.param.findViewById(2131296292);
+        this.areacdsearchspinner = (Spinner)this.param.findViewById(2131296293);
+        this.areacd = (LinearLayout)this.param.findViewById(2131296294);
+        this.areacd1 = (EditText)this.factory.inflate(2130903043, (ViewGroup)null);
+        this.areacd2 = (LinearLayout)this.factory.inflate(2130903044, (ViewGroup)null);
+        this.areacdtabfrom = (EditText)this.areacd2.findViewById(2131296268);
+        this.areacdtabto = (EditText)this.areacd2.findViewById(2131296269);
+        this.setstartPositon = (EditText)this.param.findViewById(2131296295);
+        this.setlimit = (EditText)this.param.findViewById(2131296297);
+        this.metaGetFlg = (Spinner)this.param.findViewById(2131296298);
+        this.cntGetFlg = (Spinner)this.param.findViewById(2131296299);
+        this.setcallback = (EditText)this.param.findViewById(2131296300);
+        this.backto = (Button)var2.findViewById(2131296264);
+        this.setListener(this.backto);
+        this.setListener(this.dataSetspinner);
+        this.setListener(this.lvsearchspinner);
+        this.setListener(this.cdsearchspinner);
+        this.setListener(this.timelvsearchspinner);
+        this.setListener(this.timecdsearchspinner);
+        this.setListener(this.arealvsearchspinner);
+        this.setListener(this.areacdsearchspinner);
+        this.getWindow().setSoftInputMode(3);
+        this.setContentView(var2);
+        this.loadData();
+    }
+
+    protected void onPause() {
+        this.saveData();
+        super.onPause();
+    }
+
+    public void saveData() {
+        SharedPreferences.Editor var1 = this.getSharedPreferences("ToukeiDataGetParam", 0).edit();
+        var1.putInt("dataSetspinner", this.dataSetspinner.getSelectedItemPosition());
+        var1.putString("statsDataId", this.statsDataId.getText().toString());
+        var1.putInt("lvsearchspinner", this.lvsearchspinner.getSelectedItemPosition());
+        var1.putString("lvsearch", this.lvsearch.getText().toString());
+        var1.putInt("cdsearchspinner", this.cdsearchspinner.getSelectedItemPosition());
+        if (this.cdsearchspinner.getSelectedItemPosition() == 0) {
+            var1.putString("cd1", this.cd1.getText().toString());
+        } else {
+            var1.putString("cdtabfrom", this.cdtabfrom.getText().toString());
+            var1.putString("cdtabto", this.cdtabto.getText().toString());
+        }
+
+        var1.putInt("timelvsearchspinner", this.timelvsearchspinner.getSelectedItemPosition());
+        var1.putString("timelvsearch", this.timelvsearch.getText().toString());
+        var1.putInt("timecdsearchspinner", this.timecdsearchspinner.getSelectedItemPosition());
+        if (this.timecdsearchspinner.getSelectedItemPosition() == 0) {
+            var1.putString("timecdtab1", this.timecd1.getText().toString());
+        } else {
+            var1.putString("timecdtabfrom", this.timecdtabfrom.getText().toString());
+            var1.putString("timecdtabto", this.timecdtabto.getText().toString());
+        }
+
+        var1.putInt("arealvsearchspinner", this.arealvsearchspinner.getSelectedItemPosition());
+        var1.putString("arealvsearch", this.arealvsearch.getText().toString());
+        var1.putInt("areacdsearchspinner", this.areacdsearchspinner.getSelectedItemPosition());
+        if (this.cdsearchspinner.getSelectedItemPosition() == 0) {
+            var1.putString("areacdtab1", this.areacd1.getText().toString());
+        } else {
+            var1.putString("areacdtabfrom", this.areacdtabfrom.getText().toString());
+            var1.putString("areacdtabto", this.areacdtabto.getText().toString());
+        }
+
+        var1.putString("setstartPositon", this.setstartPositon.getText().toString());
+        var1.putString("setlimit", this.setlimit.getText().toString());
+        var1.putInt("metaGetFlg", this.metaGetFlg.getSelectedItemPosition());
+        var1.putInt("cntGetFlg", this.cntGetFlg.getSelectedItemPosition());
+        var1.putString("setcallback", this.setcallback.getText().toString());
+        var1.commit();
+    }
+}
