@@ -9,6 +9,3 @@
 公式サイト
 政府統計の総合窓口（ｅ－Ｓｔａｔ）
 (https://www.e-stat.go.jp)
-
-DeployGateに保存してたapk
-https://dply.me/f4ekr6
