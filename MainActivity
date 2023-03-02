@@ -32,63 +32,63 @@ public class MainActivity extends Activity {
     }
 
     private void checkHistory() {
-        Intent var1 = new Intent();
-        var1.setClassName("com.example.toukei", "com.example.toukei.CheckHistory");
-        this.startActivity(var1);
+        Intent intentHistory = new Intent();
+        intentHistory.setClassName("com.example.toukei", "com.example.toukei.CheckHistory");
+        this.startActivity(intentHistory);
     }
 
     private void loadData() {
-        SharedPreferences var1 = this.getSharedPreferences("ToukeiCommonParam", 0);
-        this.filetype.setSelection(var1.getInt("filetype", 0));
-        this.request.setSelection(var1.getInt("request", 0));
-        this.appId.setText(var1.getString("appid", ""));
-        this.lang.setSelection(var1.getInt("lang", 0));
+        SharedPreferences intentHistory = this.getSharedPreferences("ToukeiCommonParam", 0);
+        this.filetype.setSelection(intentHistory.getInt("filetype", 0));
+        this.request.setSelection(intentHistory.getInt("request", 0));
+        this.appId.setText(intentHistory.getString("appid", ""));
+        this.lang.setSelection(intentHistory.getInt("lang", 0));
     }
 
     private void sendRequest() {
-        Intent var1 = new Intent();
+        Intent intentHistory = new Intent();
         switch (this.request.getSelectedItemPosition()) {
             case 0:
-                var1.setClassName("com.example.toukei", "com.example.toukei.ListData");
-                this.startActivity(var1);
+                intentHistory.setClassName("com.example.toukei", "com.example.toukei.ListData");
+                this.startActivity(intentHistory);
                 break;
             case 1:
-                var1.setClassName("com.example.toukei", "com.example.toukei.MetaData");
-                this.startActivity(var1);
+                intentHistory.setClassName("com.example.toukei", "com.example.toukei.MetaData");
+                this.startActivity(intentHistory);
                 break;
             case 2:
-                var1.setClassName("com.example.toukei", "com.example.toukei.GetDataList");
-                this.startActivity(var1);
+                intentHistory.setClassName("com.example.toukei", "com.example.toukei.GetDataList");
+                this.startActivity(intentHistory);
         }
 
     }
 
-    private void setListener(View var1) {
-        switch (var1.getId()) {
+    private void setListener(View intentHistory) {
+        switch (intentHistory.getId()) {
             case 2131296260:
-                var1.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View var1) {
+                intentHistory.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View intentHistory) {
                         MainActivity.this.setting();
                     }
                 });
                 break;
             case 2131296261:
-                var1.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View var1) {
+                intentHistory.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View intentHistory) {
                         MainActivity.this.sendRequest();
                     }
                 });
                 break;
             case 2131296262:
-                var1.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View var1) {
+                intentHistory.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View intentHistory) {
                         MainActivity.this.checkHistory();
                     }
                 });
                 break;
             case 2131296263:
-                var1.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View var1) {
+                intentHistory.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View intentHistory) {
                         MainActivity.this.finish();
                     }
                 });
@@ -97,19 +97,19 @@ public class MainActivity extends Activity {
     }
 
     private void setting() {
-        Intent var1 = new Intent();
+        Intent intentHistory = new Intent();
         switch (this.request.getSelectedItemPosition()) {
             case 0:
-                var1.setClassName("com.example.toukei", "com.example.toukei.ListSetting");
-                this.startActivity(var1);
+                intentHistory.setClassName("com.example.toukei", "com.example.toukei.ListSetting");
+                this.startActivity(intentHistory);
                 break;
             case 1:
-                var1.setClassName("com.example.toukei", "com.example.toukei.MetaSetting");
-                this.startActivity(var1);
+                intentHistory.setClassName("com.example.toukei", "com.example.toukei.MetaSetting");
+                this.startActivity(intentHistory);
                 break;
             case 2:
-                var1.setClassName("com.example.toukei", "com.example.toukei.DataGetSetting");
-                this.startActivity(var1);
+                intentHistory.setClassName("com.example.toukei", "com.example.toukei.DataGetSetting");
+                this.startActivity(intentHistory);
         }
 
     }
@@ -119,8 +119,8 @@ public class MainActivity extends Activity {
         super.finish();
     }
 
-    protected void onCreate(Bundle var1) {
-        super.onCreate(var1);
+    protected void onCreate(Bundle intentHistory) {
+        super.onCreate(intentHistory);
         View var2 = LayoutInflater.from(this).inflate(2130903040, (ViewGroup)null);
         this.filetype = (Spinner)var2.findViewById(2131296256);
         this.request = (Spinner)var2.findViewById(2131296257);
@@ -145,12 +145,12 @@ public class MainActivity extends Activity {
     }
 
     public void saveData() {
-        SharedPreferences.Editor var1 = this.getSharedPreferences("ToukeiCommonParam", 0).edit();
-        var1.putInt("filetype", this.filetype.getSelectedItemPosition());
-        var1.putInt("request", this.request.getSelectedItemPosition());
+        SharedPreferences.Editor intentHistory = this.getSharedPreferences("ToukeiCommonParam", 0).edit();
+        intentHistory.putInt("filetype", this.filetype.getSelectedItemPosition());
+        intentHistory.putInt("request", this.request.getSelectedItemPosition());
         //ここで統計用appIDを設定
-        var1.putString("appid", "");
-        var1.putInt("lang", this.lang.getSelectedItemPosition());
-        var1.commit();
+        intentHistory.putString("appid", "");
+        intentHistory.putInt("lang", this.lang.getSelectedItemPosition());
+        intentHistory.commit();
     }
 }
